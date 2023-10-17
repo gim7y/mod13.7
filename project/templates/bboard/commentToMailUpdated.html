@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2> {{ user }},
+    Статус вашего отклика к посту "{{ comment.post.title }}" обновлен.</h2>
+<p>
+    Пользователь
+    {% if comment.accepted %}
+        принял ваш комментарий "{{ comment.text }}" на его пост.
+    {% else %}
+        отклонил ваш комментарий "{{ comment.text }}" на его пост.
+    {% endif %}
+</p>
+</body>
+</html>

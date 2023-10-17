@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %} Post {% endblock title %}
+
+{% block content %}
+
+<div>
+    <h4> Поиск </h4>
+    {% if filter.qs %}
+<!--        <h4>Найдено постов {{ filter.qs|length }} </h4>-->
+        <form method="GET">
+            {{ filter.form }}
+            <input class="btn btn-outline-success" type="submit" value="Найти">
+        </form>
+        <h6><p> ** Чтобы оставить свой комментарий перейдите, пожалуйста, на страницу конкретного поста, нажав на заголовок...</p></h6>
+        <a href="/"> очистить </a>
+        <br>
+        <table>
+            <thead>
+                <th width="350"> Заголовок </th>
+                <th width="125"> Автор </th>
+                <th width="130"> Категория </th>
+                <th width="380"> Текст </th>
+                <th width="180"> Опубликовано </th>
+            </thead>
+            {% for post in posts %}
+                <tr>
+                    <td>
+                        <a href="{% url 'bboard:detail' post.id  %}"> {{ post.title|censor }}</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'bboard:edit' post.id %}"> Редактировать </a>
+                            <a href="{% url 'bboard:delete' post.id %}"> Удалить </a>
+                        {% endif %}
+                    </td>
+                    <td> {{ post.author }} </td>
+                    <td> {{ post.cat }} </td>
+                    <td> {{ post.content|censor|striptags }} </td>
+                    <td> {{ post.time_update }} </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h5>Пока ничего нечего не найдено, но вы можете попробовать позже. </h5>
+        <a href="/"> очистить фильтр </a>
+    {% endif %}
+</div>
+
+<br>
+{% if user.is_authenticated %}
+    <a href='create'> Добавить пост </a> <br>
+
+    <a href="add_comment"> Оставить отклик </a> <br>
+{% endif %}
+<br>
+<br>
+
+{% include 'bboard/pagination.html' %}
+
+{% endblock %}

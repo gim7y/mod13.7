@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %} edit {% endblock %}
+
+{% block content %}
+
+<h3>Редактирование публикации</h3>
+
+<!--Дата публикации: {{ post.dateCreated|date:'d-m-Y H:i' }}-->
+
+<!-- Форма для добавления -->
+<form method="POST" name="edit" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <input type="submit" value="Добавить статью">
+</form>
+<a href="/">Назад ко всем статьям</a>  <br>
+
+{% endblock %}

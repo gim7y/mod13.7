@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+ 
+{% block title %} Post delete {% endblock title %}
+ 
+{% block content %}
+<h4>Вы действительно хотите удалить данный пост?</h4>
+<table>
+    <thead>
+        <th width="80">Автор</th>
+        <th width="130">Заголовок</th>
+        <th width="200">дата публикации</th>
+        <th>Текст</th>
+    </thead>
+    <tr>
+        <td>{{ post.author|title }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.datetime_creation }}</td>
+        <td>{{ post.preview|striptags }}</td>
+    </tr>
+</table>
+<br>
+<br>
+ 
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+    <br>
+    <a href="/"> Все посты </a>
+{% endblock content %}

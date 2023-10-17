@@ -1,0 +1,15 @@
+{% block content %}
+
+    <h3>Добавление коммента</h3><br>
+
+	{% if user.is_authenticated %}
+	<form method="POST" name="add" >
+		{% csrf_token %}
+        {{ form }}
+		<input class="btn btn-secondary" type="submit" value="Добавить комментарий">
+	</form><br>
+	{% endif %}
+
+    <a href="/">Назад ко всем объявлениям</a>
+{% endblock %}
+

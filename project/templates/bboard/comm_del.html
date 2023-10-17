@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+ 
+{% block title %} Comment delete {% endblock title %}
+ 
+{% block content %}
+<h4>Вы действительно хотите удалить данный комментрий?</h4>
+<table>
+    <thead>
+        <th width="230">Пост</th>
+        <th width="155">Дата отклика</th>
+        <th width="80">Автор отклика</th>
+        <th width="330">Коммент</th>
+    </thead>
+    {% for comment in filter.qs %}
+        <tr>
+            <td><p align="left">{{ comment.post|striptags }}</p></td>
+            <td><p align="left">{{ comment.datetime_creation }}</p></td>
+            <td><p align="left">{{ comment.author.username }}</p></td>
+            <td><p align="left">{{ comment.text|censor|striptags }}</p></td>
+        <td>
+</table>
+<br>
+<br>
+ 
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+    <br>
+    <a href="/"> Все посты </a>
+{% endblock content %}

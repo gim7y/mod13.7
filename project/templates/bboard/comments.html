@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %} Comments {% endblock title %}
+
+{% block content %}
+
+    <h4> Отклики </h4>
+    {% if filter.qs %}
+        <form method="GET" name="comments">
+            {{ filter.form }}
+            <input class="btn btn-outline-danger" type="submit" value="Поиск по откликам">
+        </form><br>
+
+        <a href='/comm'> очистить </a><br>
+
+        <table cellpadding="1" frame="hsides">
+            <caption align="top"> <h4>Комменты на посты:</h4></caption>
+                <tr>
+                    <th width="230">Пост</th>
+                    <th width="155">Дата отклика</th>
+                    <th width="80">Автор отклика</th>
+                    <th width="330">Коммент</th>
+                    <th>Действия с откликом - Принять или Отклонить, а можно и Удалить</th>
+                </tr>
+                {% for comment in comments %}
+                <tr>
+                    <td><p align="left">{{ comment.post|striptags }}</p></td>
+                    <td><p align="left">{{ comment.datetime_creation }}</p></td>
+                    <td><p align="left">{{ comment.author.username }}</p></td>
+                    <td><p align="left">{{ comment.text|censor|striptags }}</p></td>
+                    <td>
+                        {% if comment.accepted %}
+                            <a href="{% url 'bboard:change_status' comment.pk %}" title='Изменить на "Отклонить"'>Отклонить</a>
+                        {% else %}
+                            <a href="{% url 'bboard:change_status' comment.pk %}" title='Изменить на "Принять"'>Принять коммент</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form action="{% url 'bboard:del_comm' comment.pk %}" method="delete">
+                            <button>Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+    {% else %}
+        <h5> Откликов пока нет... </h5>
+        <a href='/comm'> <br> Очистить фильтр </a><br>
+
+    {% endif %}
+
+{% include 'bboard/pagination.html' %}
+
+{% endblock content %}

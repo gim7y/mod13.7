@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Create post{% endblock title %}
+
+{% block content %}
+
+    <h3>Добавить объявление </h3><br>
+	<form method="POST" name="create" enctype="multipart/form-data" >
+		{% csrf_token %}
+		{{ form.media }}
+        {{ form.as_p }}
+		<input class="btn btn-outline-danger mt-2 float-center" type="submit" value="Добавить пост">
+	</form><br>
+Или
+<input type=button value="Вернуться назад" class="btn btn-outline-warning mt-3" rows="2" onClick="javascript:history.go(-1);"><br>
+
+<a href="/">А можно перейти ко всем объявлениям</a>
+
+{% endblock content %}
